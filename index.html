@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#5b5fef">
+<title>SiBlast — WhatsApp Broadcast</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=account_circle,add,add_circle,admin_panel_settings,alarm,arrow_back,arrow_forward,attach_file,bar_chart,calendar_month,call,campaign,category,chat,chat_bubble,check,check_circle,chevron_left,chevron_right,close,cloud_done,cloud_off,cloud_upload,coffee,contacts,content_copy,content_paste,dashboard,delete,description,done_all,download,edit,edit_note,error,event,event_available,event_busy,expand_more,fact_check,file_download,forum,group,group_add,groups,help,history,hourglass_empty,hourglass_top,info,key,key_off,link_off,local_offer,location_on,lock,lock_reset,logout,mail,mark_chat_unread,mark_email_read,mic,monitoring,mood,notifications,notifications_active,open_in_new,password,pause_circle,person_add,person_check,phone_in_talk,picture_as_pdf,play_circle,radio_button_checked,radio_button_unchecked,receipt_long,refresh,replay,save,schedule,science,search,search_off,send,settings,shield,shield_lock,show_chart,smartphone,speed,stop_circle,sync,table_chart,table_view,task_alt,timelapse,trending_up,upload,verified,verified_user,videocam,visibility,visibility_off,warning,wifi_tethering&display=block">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- Halaman masuk -->
+<div id="login" class="hide"></div>
+
+<!-- Aplikasi -->
+<div id="app" class="hide">
+  <div class="shell">
+    <aside class="side">
+      <div>
+        <div class="brand"><div class="logo"><span class="ms">forum</span></div><b>SiBlast</b></div>
+        <nav class="nav" id="nav">
+          <a href="#/dashboard" data-r="dashboard"><span class="ms">dashboard</span>Dashboard</a>
+          <a href="#/peserta" data-r="peserta"><span class="ms">group</span>Peserta</a>
+          <a href="#/template" data-r="template"><span class="ms">chat</span>Template</a>
+          <a href="#/broadcast" data-r="broadcast"><span class="ms">send</span>Buat Broadcast</a>
+          <a href="#/agenda" data-r="agenda"><span class="ms">calendar_month</span>Agenda</a>
+          <a href="#/riwayat" data-r="riwayat"><span class="ms">bar_chart</span>Riwayat &amp; Laporan</a>
+          <a href="#/pengaturan" data-r="pengaturan"><span class="ms">settings</span>Pengaturan</a>
+          <a href="#" class="out" data-act="logout"><span class="ms">logout</span>Keluar</a>
+        </nav>
+      </div>
+      <div class="gw" id="gw">
+        <div class="r"><span class="ms lg">forum</span><span class="badge b-ok" id="gwBadge"><i></i>Terhubung</span></div>
+        <div><b>Status WhatsApp</b><br><small id="gwSub">Gateway Aktif</small></div>
+        <button data-act="cekGateway">Cek Koneksi</button>
+      </div>
+    </aside>
+
+    <div class="col">
+      <header class="top">
+        <div class="ttl"><b>WhatsApp Broadcast Engine</b><small>Kirim pesan massal dari data Excel / Google Sheets</small></div>
+        <div class="rt">
+          <div id="sendChip"></div>
+          <div class="search"><span class="ms">search</span><input id="gsearch" placeholder="Cari peserta..." autocomplete="off"></div>
+          <button class="ibtn" data-act="bell" title="Notifikasi"><span class="ms lg">notifications</span><i class="dot hide" id="bellDot"></i></button>
+          <div class="vl"></div>
+          <div class="me" data-act="meMenu">
+            <div class="ava" id="meAva">A</div>
+            <div class="nm"><b id="meNama">Admin</b><small>Admin</small></div>
+            <span class="ms" style="color:var(--text2)">expand_more</span>
+            <div class="menu hide" id="meMenu">
+              <button data-act="goPengaturan"><span class="ms">settings</span>Pengaturan</button>
+              <button data-act="logout"><span class="ms">logout</span>Keluar</button>
+            </div>
+          </div>
+        </div>
+      </header>
+      <main id="main"><div class="view" id="view"></div></main>
+    </div>
+  </div>
+</div>
+
+<nav class="mobnav" id="mobnav">
+  <a href="#/dashboard" data-r="dashboard"><span class="ms">dashboard</span>Beranda</a>
+  <a href="#/peserta" data-r="peserta"><span class="ms">group</span>Peserta</a>
+  <a href="#/broadcast" data-r="broadcast"><span class="ms">send</span>Kirim</a>
+  <a href="#/agenda" data-r="agenda"><span class="ms">calendar_month</span>Agenda</a>
+  <a href="#/riwayat" data-r="riwayat"><span class="ms">bar_chart</span>Laporan</a>
+  <a href="#/pengaturan" data-r="pengaturan"><span class="ms">settings</span>Atur</a>
+</nav>
+
+<div id="modal"></div>
+<div id="toasts"></div>
+
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/views.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
