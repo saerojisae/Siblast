@@ -35,6 +35,17 @@
 
   function tidur(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
 
+  /** Pesan galat yang membedakan penyebab sebenarnya (bukan selalu "periksa internet"). */
+  function pesanGalat(err) {
+    var u = String(URL_GAS || '');
+    if (!u || /GANTI_DENGAN/.test(u)) return 'GAS_URL belum diisi. Buka js/config.js dan isi dengan URL Web App (berakhiran /exec).';
+    if (!/^https:\/\/script\.google(usercontent)?\.com\/.+\/exec$/.test(u)) return 'GAS_URL tidak valid. Harus berbentuk https://script.google.com/macros/s/…/exec (bukan /dev, bukan URL editor).';
+    if (err && err.name === 'AbortError') return 'Server terlalu lama merespons. Coba lagi sebentar.';
+    if (typeof navigator !== 'undefined' && navigator.onLine === false) return 'Perangkat sedang offline. Periksa koneksi internet Anda.';
+    if (err && err.name === 'SyntaxError') return 'Server membalas bukan data aplikasi. Biasanya akses deployment belum "Anyone" atau kode terbaru belum di-deploy sebagai versi baru.';
+    return 'Server tidak dapat dijangkau (internet Anda aktif). Penyebab umum: URL deployment salah/lama di config.js, atau akses Web App bukan "Anyone". Alamat saat ini: ' + u.slice(0, 48) + '…' + u.slice(-12);
+  }
+
   async function sekali(action, data, ms) {
     var ctl = new AbortController();
     var tm = setTimeout(function () { ctl.abort(); }, ms);
@@ -68,7 +79,7 @@
           if (i + 1 < percobaan) await tidur(700);
         }
       }
-      return { ok: false, network: true, message: (err && err.name === 'AbortError') ? 'Server terlalu lama merespons.' : 'Tidak ada koneksi ke server. Periksa internet Anda.' };
+      return { ok: false, network: true, message: pesanGalat(err) };
     })();
 
     if (key) { inflight[key] = p; p.then(function () { delete inflight[key]; }, function () { delete inflight[key]; }); }
